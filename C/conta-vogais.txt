@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+int main()
+{
+
+ char ch;
+ int vogais = 0;
+ FILE *texto;
+
+ if (texto = fopen("conta-vogais.c","r"))
+ {
+  while (!feof (texto) )
+  {
+   ch = fgetc (texto);
+   switch (ch)
+   {
+    case 'a':
+    case 'e':
+    case 'i':
+    case 'o':
+    case 'u':
+    case 'A':
+    case 'E':
+    case 'I':
+    case 'O':
+    case 'U': vogais = vogais++;
+   }
+  }
+ fclose(texto);
+ printf("O arquivo contem: %d vogais\n", vogais);
+ return (0);
+ }
+ return(1);
+ printf("O arquivo nao pode ser aberto");
+}

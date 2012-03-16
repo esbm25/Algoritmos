@@ -1,0 +1,26 @@
+algoritmo Exercicio07
+
+
+função primo ( a : inteiro ) : lógico
+
+inteiro i, cont
+
+inicio
+
+cont=0
+	para i=1 ate a faça
+		se ( a mod i == 0 ) entao
+			cont=cont+1
+		fim-se
+		
+		se ( cont == 3 ) entao
+			interrompe loop
+		fim-se
+	fim-para
+	
+	se ( cont == 3 ) entao
+		retorna(falso)
+	senao
+		retorna(verdadeiro)
+	fim-se
+fim

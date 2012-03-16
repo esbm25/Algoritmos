@@ -1,0 +1,18 @@
+procedimento inverte_string( &str : string )
+
+
+	i : inteiro;
+	pilha : ponteiro;
+
+inicio
+	pilha=nulo;
+
+	para i=1 ate tamanho( str ) faça
+		push( pilha , str[i] )
+	fim-para
+	
+	para i=1 ate tamanho( str ) faça
+		str[i]=pilha^.dado
+		pop(pilha)
+	fim-para	
+fim

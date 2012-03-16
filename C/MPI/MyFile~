@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <FileHelp.h>
+
+
+struct MyFile {
+	char* name;
+	int lines;
+	int cursor;
+	FILE* file;
+};
+
+
+int loadFile(char* path){
+
+}
+
+int saveFile(char* path, FILE* file){
+
+}
+
+int write(struct MyFile file, char* c){
+
+}
+
+int writeLn(struct MyFile , char* c){
+
+}

@@ -1,0 +1,46 @@
+Algoritmo jogo_da_execução;
+tipo
+	ponteiro = referencia para nó;
+	nó = registro {
+			dado : string;
+			prox : ponteiro;
+			}
+var globais
+	prim : ponteiro;
+	elem : String;
+
+procedimento inicializa_LSLC( &prim : ponteiro; elem : string)
+Inicio
+	aloca (prim);
+	prim^.dado = elem;
+	prim^.prox = prim;
+Fim
+
+procedimento execucao ( &prim : ponteiro; elem : String)
+var locais
+	aux : ponteiro;
+
+Inicio
+	aux = prim^.prox;
+	enquanto (aux^.dado <> elem ou aux = prim) faça
+		aux = aux^.prox;
+	fim-enquanto
+	se aux^.dado == elem então
+		escreva "O primeiro a ser executado será: ", elem;
+		aux = aux^.prox;
+		enquanto (aux^.prox^.dado <> elem) faça
+			escreva aux^.dado;
+			aux = aux^.prox;
+		fim-enquanto;
+		escreva "O que será liberado se chama: ", aux^.dado;
+	senão
+		escreva "Entre os nomes pertencente ao jogo, não existe o informado!";
+	fim-se
+Fim
+
+Inicio //principal
+	escreva "Entre com o nome de uma pessoa: ";
+	leia (elem);
+	inicializa_LSLC (prim, elem);
+	execucao (prim, elem);
+Fim

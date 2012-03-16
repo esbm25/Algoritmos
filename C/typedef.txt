@@ -1,0 +1,8 @@
+typedef unsigned char uchar;
+typedef unsigned float ufloat;
+typedef sigend int sint;
+ 
+/* Declarando as variáveis */
+uchar cSexo;
+ufloat fSalário;
+sint i;

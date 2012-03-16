@@ -1,0 +1,38 @@
+Uma estrutura é uma coleção de variáveis.
+
+Por exemplo, você pode declarar uma estrutura do tipo Nome a qual contém os itens Primeiro Nome, Nome do Meio e Sobrenome.
+
+No código anexo foram declaradas duas estruturas. A primeira estrutura, NomeCompleto, contém as variáveis que compõem um nome e a segunda estrutura, Pessoa, contém a primeira estrutura e a variável idade.
+
+Script:
+
+#include <stdio.h>
+
+int main()
+{
+
+struct NomeCompleto {
+char Primeiro[15];
+char Meio[15];
+char Sobrenome[15];
+};
+
+struct Pessoa {
+struct NomeCompleto Nome;
+int idade;
+};
+
+struct Pessoa Drausio;
+
+printf(" Digite seu primeiro nome: ");
+scanf("%s", &Drausio.Nome.Primeiro);
+printf("Digite seu nome do meio: ");
+scanf("%s", &Drausio.Nome.Meio);
+printf("Digite seu sobrenome: ");
+scanf("%s", &Drausio.Nome.Sobrenome);
+printf("Digite sua idade: ");
+scanf("%d", &Drausio.idade);
+
+printf("Nome completo: %s %s %s\nIdade: %d anos\n", Drausio.Nome.Primeiro, Drausio.Nome.Meio, Drausio.Nome.Sobrenome, Drausio.idade);
+}
+

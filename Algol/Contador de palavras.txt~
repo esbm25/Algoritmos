@@ -1,0 +1,34 @@
+Algoritmo palavra_frase
+	var globais
+	literal frase, palavra;
+
+função contador (frase, palavra : literal) : inteiro
+	var locais
+	int : cont, cont1;
+
+inicio
+
+	cont=0;
+	para i=1 ate tamanho(frase) faça
+		para j=1 ate tamanho(palavra) faça
+			Se frase[i+j-1]==palavra[j] então
+				cont=cont+1;
+			fim-se
+		fim-para
+		se cont==tamanho(palavra) então
+			cont1=cont1+1;
+		fim-se
+	fim-para
+	retorna (cont1);
+
+fim
+
+Inicio //principal
+
+	escreva "Entre com a Frase: ";
+	leia frase;
+	escreva "Entre com A LETRA: ";
+	leia palavra;
+	escreva "O numero de vezes que apareceu a palavra ", palavra," na frase foi", contador(frase,palavra), " vezes";
+
+Fim.

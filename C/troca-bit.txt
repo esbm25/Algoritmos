@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void lerbinario(int c, char bin[])
+{
+        int i;
+
+        i = 0;
+        while (c > 0)
+        {
+                bin[i] = c % 2;
+                c = c / 2;
+                i = i+1;
+        }
+
+}
+
+int invertebit(char bin[],char letra)
+{
+ if (bin[6] == 1)
+  return(letra & 123);
+ else
+  return(letra | 4);
+}
+//-------------------------------------------------------
+
+int main(int argc, char* argv[])
+{
+
+        int c,i,j;
+        char bin[250];
+ char letra;
+ char palavra[250];
+
+ for (j=1; j < argc;j++)
+ {
+  strcpy(palavra,argv[j]);
+  for (i = 0; i < strlen(palavra);i++)
+  {
+   letra = palavra[i];
+   c = letra;
+   lerbinario(c,bin);
+   printf("%c",invertebit(bin,letra));
+  }
+ printf(" ");
+ }
+ printf("\n");
+ printf("%s",bin);
+return 0;
+}

@@ -1,0 +1,184 @@
+/*
+*  <Soma de Matriz MPI> is a  <Software para soma de matrizes utilizando a biblioteca MPI >
+*  Copyright (C) 2010 Gustavo Liberatti <liberatti.gustvo@gmail.com>
+*		      Rodicrisller Rodrigues <rodi_67@gmail.com>
+		      Guilherme W. dos Santos Lopes <gwslopes@gmail.com> 			
+*  This program is free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2, or (at your option)
+*  any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program; if not, write to the Free Software
+*  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+*
+*/
+
+#include <stdio.h>
+#include "mpi.h"
+#include <string.h>
+
+int *MatrizA, *MatrizB;		// Variáveis para armazenamento das matrizes de entrada
+int *VetorSplit;		// Vetor auxiliar para enviar resultados dos SLAVES para o MASTER (0)
+int MAX = 1000;			// tamanho máximo das matrizes de entrada
+
+void imprimeMatriz(int *matriz){
+	int l,c;
+	for(l=0;l<MAX;l++){
+		for(c=0;c<MAX-1;c++){
+			printf("|%d|",matriz[l*MAX + c]);
+		}	
+		printf("\n");
+	}
+	printf("\n");
+}
+
+// Variável para limpar o concole de comando para as plataformas WIN32 e LINUX
+void clear(){
+	//Diretiva de compilação para limpar a tela
+	#ifdef WIN32
+		system("cls");
+	#else
+		system("clear");
+	#endif
+}
+
+//Função que carrega um arquivo alfanumérico contendo apenas numeros e insere em um vetor de tamanho compativel com o parametro
+// fornecido na linha de comando.
+void load(char* file,int *data){
+	FILE *fp;
+	if( NULL == (fp = fopen(file, "r")) ) {
+		printf("Falha ao carregar arquivo: %s\n\n", file);
+		return 1;
+	}
+	// variável que irá receber a linha lida do arquivo
+	char line[255];
+	int i=0;
+	  while (!feof(fp) && i < MAX*MAX)  
+	 {    	
+		fscanf(fp, "%s", line);
+		data[i]=atoi(line); // Converte String obtida junto ao arquivo e adiciona na proxima posição do vetor
+		i++;
+	}
+	printf("%d Valores carregados do arquivo: %s\n",i,file);
+}
+void imprimirMenu(){
+	clear();
+	printf("--------------------------------------------------------------------------------------------\n");
+	printf("Desenvolvido pelos alunos: Rodicrisller Rodrigues," );
+	printf(	"Gustavo Liberatti, \n");
+	printf("--------------------------------------------------------------------------------------------\n\n");
+}
+
+int main(int argc,char *argv[])  {
+	int numtasks, rank, tag=1;  	//Grupo de variáveis destinadas ao controle MPI
+	double tempoI, tempoF;		// Variáveis para calcular o tempo de execução
+	int i, index, splitSize,IniMatriz, FimMatriz;	// Variáveis para a manipulação e controle de laços
+	MPI_Status Stat;		// Status para MPI_Recv
+	
+
+	// Inicia ambiente MPI para a aplicação
+	MPI_Init(&argc,&argv);
+	MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+	// Efetua a validação dos parametros de entrada da linha de comando
+	if(!(argc < 3)){
+		MAX = atoi(argv[3]) ;
+		if(MAX < 0){			// O valor informado é inválido
+			clear();
+			printf("ERRO - Informe um numero válido para quantidade !\n");
+			return 1;
+		}
+	}else{						//Faltam parametros de entrada para o programa
+		clear();
+		printf("ERRO - Informe o caminho do arquivo de entrada e a quantidade de elementos a serem computados !\n");
+		return 1;
+	}	
+
+	// Calcula tamanho para cada partição do vetor principal
+	splitSize = (MAX*MAX ) / (numtasks -1);
+
+
+	// Aloca vetor com tamanho apropriado
+	MatrizA = (int*) malloc(sizeof(int) * MAX * MAX);
+	MatrizB = (int*) malloc(sizeof(int) * MAX * MAX);
+	VetorSplit = (int*) malloc(sizeof(int) * splitSize);
+	
+	if (rank == 0){
+		tempoI=MPI_Wtime();	//Coleta o tempo de inicio do processamento	
+		imprimirMenu();
+		printf("Métodos--------------------------------------------------------------------------------------\n\n");
+		load(argv[1],MatrizA);	// Carrega matriz A
+		load(argv[2],MatrizB);	// Carrega matriz A	
+		printf("O programa utiliza comunicação direta para distribuir os valores\n");
+		printf("Ambas as matrizes serão enviadas para os %d processos SLAVES\n",numtasks -1);
+		printf("As respostas parciais serão enviadas de cada processo SLAVE em um vetor de dimensão %d\n",splitSize);
+		printf("--------------------------------------------------------------------------------------------\n");
+		printf("Matriz de Entrada A \n");
+		imprimeMatriz(MatrizA);
+		printf("Matriz de Entrada B \n");
+		imprimeMatriz(MatrizB);
+		printf("--------------------------------------------------------------------------------------------\n");
+		IniMatriz = 0;
+		FimMatriz = splitSize -1;
+		// Realiza a distribuição dos valores enviando a MatrizA e a MatrizB, além dos valores de inicio e fim
+		// Para os processos SLAVES
+		for(index = 1; index < numtasks; index++){
+			MPI_Send(&IniMatriz, 1, MPI_INT, index , tag, MPI_COMM_WORLD);
+			MPI_Send(&FimMatriz, 1, MPI_INT, index , tag, MPI_COMM_WORLD);
+			MPI_Send(MatrizA, MAX * MAX, MPI_INT, index , tag, MPI_COMM_WORLD);
+			MPI_Send(MatrizB,  MAX * MAX, MPI_INT, index , tag, MPI_COMM_WORLD);
+			IniMatriz = FimMatriz +1;
+			FimMatriz = FimMatriz + splitSize;
+		}
+		// Recebe todos os vetores contendo resultados parciais e faz a junção na MatrizA
+		for(index = 1; index < numtasks; index++){
+			MPI_Recv(&IniMatriz, 1, MPI_INT, index, tag, MPI_COMM_WORLD, &Stat);
+			MPI_Recv(&FimMatriz, 1, MPI_INT, index, tag, MPI_COMM_WORLD, &Stat);
+			MPI_Recv(VetorSplit, splitSize, MPI_INT, index, tag, MPI_COMM_WORLD, &Stat);
+			int tempI = 0;
+			int i;
+			for(i=IniMatriz;i<=FimMatriz;i++){
+				MatrizA[i]=VetorSplit[tempI];
+				tempI++;
+			}
+		}
+		// Calcula valores que não puderam ser enviados aos processos SLAVES
+		if((FimMatriz < (MAX*MAX))){
+			FimMatriz++;
+			while(FimMatriz < (MAX*MAX)){
+				MatrizA[FimMatriz] = MatrizA[FimMatriz] + MatrizB[FimMatriz];
+				FimMatriz++;
+			}
+		}
+		printf("Resultados----------------------------------------------------------------------------------\n\n");
+		printf("Matriz Resultante --------------------------------------------------------------------------\n");
+		imprimeMatriz(MatrizA);
+		printf("--------------------------------------------------------------------------------------------\n");
+		tempoF = MPI_Wtime();
+		printf("tempo gasto: %lf\n\n", tempoF - tempoI );
+		printf("--------------------------------------------------------------------------------------------\n\n");
+
+  	}else{
+		MPI_Recv(&IniMatriz, 1, MPI_INT, 0, tag, MPI_COMM_WORLD, &Stat);
+		MPI_Recv(&FimMatriz, 1, MPI_INT, 0, tag, MPI_COMM_WORLD, &Stat);
+		MPI_Recv(MatrizA,  MAX * MAX, MPI_INT, 0, tag, MPI_COMM_WORLD, &Stat);
+		MPI_Recv(MatrizB,  MAX * MAX, MPI_INT, 0, tag, MPI_COMM_WORLD, &Stat);
+		int tempI = 0;
+		for(i=IniMatriz;i<=FimMatriz;i++){
+			VetorSplit[tempI] = MatrizA[i]+ MatrizB[i];	
+			tempI++;
+		}
+		MPI_Send(&IniMatriz, 1, MPI_INT, 0, tag, MPI_COMM_WORLD);
+		MPI_Send(&FimMatriz, 1, MPI_INT, 0, tag, MPI_COMM_WORLD);
+		MPI_Send(VetorSplit, splitSize, MPI_INT, 0, tag, MPI_COMM_WORLD);
+  	}
+
+MPI_Finalize();
+}

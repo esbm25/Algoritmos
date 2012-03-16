@@ -1,0 +1,10 @@
+typedef struct MyFile TFile;
+
+
+int loadFile(char* path);
+
+int saveFile(char* path, FILE* file);
+
+int write(FILE* file, char* c);
+
+int writeLn();

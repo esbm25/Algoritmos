@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <string.h>
+
+void abrevia_nome(char *nome)
+{
+        printf("%c. ",nome[0]);
+}
+
+int main(int argc, char* argv[])
+{
+        int i;
+        char nome[100];
+
+
+        if (argc == 1)
+        {
+                printf("Uso incorreto do comando!\n");
+                return(2);
+        }
+        else
+        {
+                printf("%s ",argv[1]);
+                i=2;
+                do
+                {
+                        strcpy(nome,argv[i]);
+                        abrevia_nome(nome);
+                        i=i+1;
+                }
+                while ((argc -1) > i);
+                printf("%s\n",argv[argc-1]);
+        return 0;
+        }
+}

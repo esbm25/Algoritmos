@@ -1,0 +1,26 @@
+função concatena_listas ( prim1, prim2 : ponteiro ) : ponteiro
+var local
+	aux1, aux2 : ponteiro;
+
+Inicio
+	aux1 = prim1;
+	aux2 = prim2;
+	enquanto (aux1^.prox <> nulo ou aux2^.prox <> nulo) faça
+		aux2^.prox = aux1^.prox;
+		aux1^.prox = aux2;
+		aux1 = aux2^.prox;
+		aux2 = aux1^.prox;
+	fim-enquanto
+	se aux1^.prox == Nulo então
+		aux1^.prox = aux2;
+		retorne (prim1);
+	senão
+		se aux2^.prox == Nulo então
+			aux2^.prox = aux1;
+			retorne (prim1);
+		senão
+			escreva "Ocorreu um erro na execução da função!";
+			retorne (Nulo);
+		fim-se
+	fim-se
+Fim

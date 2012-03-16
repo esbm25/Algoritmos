@@ -1,0 +1,27 @@
+ 
+#include <stdio.h>
+
+int main()
+{
+        int num,n1,n2,n3;
+
+        printf("Informe um numero de tres digitos: ");
+        scanf("%d",&num);
+        if((num < 1000 && num > 10))
+                if (num >= 100){
+                        n3=num % 10;
+                        num=num / 10;
+                        n1=num / 10;
+                        n2=num % 10;
+                        printf("O numero obtido e: %d%d%d\n",n3,n2,n1);
+                }
+                else{
+                        n1=num / 10;
+                        n2=num % 10;
+                        printf("O numero obtido e: 0%d%d\n",n2,n1);
+                }
+        else{
+                n1=num % 10;
+                printf("O numero obtido e: 00%d",n1);
+        }
+}

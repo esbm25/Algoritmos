@@ -1,0 +1,4 @@
+	Uma lista sequencial tem vantagens e desvantagens tanto como uma lista dinâmica.
+	A lista sequencial é de manuseio mais prático, tem melhor performance, todas as posições são acessiveis e de rápido acesso. Mas ela já ocupa, desde a criação, espaço na memória, tem um número limitado de posições.
+	A lista dinamica é de numero "Ilimitado" de posições, ocupa espaço na memória só depois de alocada, é possivel desalocar, e de mais facilidade em inserção de elementos do que em listas sequenciais, mas é de menos performance, os elementos não são acessiveis pela posição.
+	Para escolher entre um ou outro, depende da situação, se eu sei o número de elementos a ser trabalhado, eu opto por performance (sequencial), se eu desconheço o numero de elementos eu opto pela dinamica.

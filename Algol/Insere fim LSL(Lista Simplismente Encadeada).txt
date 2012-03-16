@@ -1,0 +1,14 @@
+procedimento insere_fim(prim : ponteiro; elem : tipo);
+var local
+	novo, aux : ponteiro;
+
+Inicio
+	aux <- prim;
+	enquanto (aux^.prox <> nulo) faça
+		aux <- aux^.prox;
+	fim-enquanto
+	aloca (novo);
+	novo^.dado <- elem;
+	novo^.prox <- nulo;
+	aux^.prox <- novo;
+Fim

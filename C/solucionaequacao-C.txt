@@ -1,0 +1,24 @@
+
+#include <stdio.h>
+
+int main()
+{
+        double a,b,c,d,e,f,x,y;
+
+        printf("Informe o valor de a: ");
+        scanf("%lf",&a);
+        printf("Informe o valor de b: ");
+        scanf("%lf",&b);
+        printf("Informe o valor de c: ");
+        scanf("%lf",&c);
+        printf("Informe o valor de d: ");
+        scanf("%lf",&d);
+        printf("Informe o valor de e: ");
+        scanf("%lf",&e);
+        printf("Informe o valor de f: ");
+        scanf("%lf",&f);
+        x=(c*e-b*f)/(a*e-b*d);
+        y=(a*f-c*d)/(a*e-b*d);
+        printf("O valor de x e: %lf\n",x);
+        printf("O valor de y e: %lf\n",y);
+}

@@ -1,0 +1,31 @@
+
+pilha_concatenada=nulo;
+
+procedimento concatena_duas_pilhas( pilha1 : ponteiro , pilha2 : ponteiro , &pilha_concatenada : ponteiro )
+inicio
+
+	enquanto  ( pilha1 <> nulo )  ou  ( pilha2 <> nulo ) faça
+
+		se pilha1^.dado < pilha2^.dado então
+			push(pilha_concatenada , pilha1^.dado )
+			pop(pilha1)
+		senao
+			push(pilha_concatenada , pilha2^.dado )
+			pop(pilha2)
+		fim-se
+	fim-enquanto
+	
+	se ( pilha1 == nulo ) E ( pilha2 <> nulo ) entao
+		enquanto pilha2 <> nulo faça
+			push(pilha_concatenada , pilha2^.dado)
+			pop(pilha2)
+		fim-enquanto
+	senao
+		se ( pilha1 <> nulo ) E ( pilha2 == nulo ) entao
+			enquanto pilha1 <> nulo faça
+				push(pilha_concatenada , pilha1^.dado)
+				pop(pilha1)
+			fim-enquanto
+		fim-se
+	fim-se
+fim

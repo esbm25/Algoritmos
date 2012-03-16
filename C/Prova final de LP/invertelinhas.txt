@@ -1,0 +1,102 @@
+program invertelinhas;
+
+(* Declaracao de Tipo do ponteiro *)
+type
+        PNo = ^TNo;
+        TNo = record
+                conteudo : String;
+                Link : PNo;
+        end;
+
+(* Declaracao das variavel GLOBAIS *)
+var
+        texto : Text;
+        Ponteiro : PNo;
+
+(* Insercao no FINAL de uma Lista, detalhe: Insercao por recursao *)
+function insercao ( var Ponteiro : PNo ; linha : String) : Boolean;
+begin
+        if Ponteiro = NIL then
+        begin
+                New (Ponteiro);
+                Ponteiro^.conteudo := linha;
+                Ponteiro^.Link := NIL;
+        end
+        else
+                insercao := insercao (Ponteiro^.Link, linha);
+end;
+
+// EXIBE a LISTA
+//-----------------------------------
+//O porque da recursao:
+//      Como a insercao dos elementos
+//foi feita no final da lista, a recur-
+//sao eh uma pilha, portanto, ao usar
+//a recursao posso escrever na ordem
+//inversa do que existe na lista, fa-
+//zendo com que saia invertido o texto.
+
+procedure Exibe_Lista (Ponteiro : PNo);
+begin
+        if Ponteiro <> NIL then
+        begin
+                Exibe_Lista (Ponteiro^.Link);
+                Write (Ponteiro^.conteudo);
+        end;
+        WriteLn();
+end;
+
+//DESTROI
+//------------------------------------
+//      Ensinado pelo professor ao ex-
+//plicar sobre a serie de fibonacci  e
+//copiado para DESTROIR  a  lista,  ou
+//liberar espaco na memoria.
+
+procedure Destroi ( var lst : PNo );
+begin
+        if lst <> NIL then
+        begin
+                Destroi (lst^.Link);
+                Dispose (lst);
+        end;
+end;
+
+//MANIPULA
+//--------------------------------------------------------------------------------------
+//      O procedimento MANIPULA tem a primordial tarefa de ler a linha e enviar para   a
+//insercao no final da lista, Logo apos de enviar para a Insercao, o procedimento inicia
+//o Exibe_Lista, que tem a tarefa de exibir na ordem inversa a lista, Depois ele  inicia
+//o procedimento Destroi que acaba com a lista, ai fecha o texto.
+
+procedure Manipula_Arq ( nomedoarquivo : String );
+var
+        linha : String;
+
+begin
+        {$I-}
+        Assign ( texto, nomedoarquivo);
+        Reset ( texto );
+        Ponteiro := NIL;
+        {$I+}
+        if IOResult = 0 then
+        begin
+                While not eof (texto) do
+                begin
+                        ReadLn (texto, linha);
+                        insercao (Ponteiro, linha);
+                end;
+                Exibe_Lista (Ponteiro);
+                Destroi (Ponteiro);
+                close (texto);
+        end
+        else
+                WriteLn ('O arquivo e inexistente ou houve algum erro de funcao');
+end;
+
+begin
+        if ParamCount <> 0 then
+                Manipula_Arq ( ParamStr(1))
+        else
+                WriteLn ('O arquivo nao existe, ou voce esqueceu de digitar');
+end.

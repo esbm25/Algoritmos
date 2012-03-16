@@ -1,0 +1,57 @@
+Algoritmo Numeros_Primos
+	Variáveis Globais
+	N, soma_primos, j: Inteiro
+
+Função Primos: lógica
+	variáveis locais
+		i, cont: inteiro
+
+		Inicio
+
+		cont=0
+		para i=1 até j faça
+			Se j mod i==0 então
+				cont=cont+1
+			fim-se
+		fim-para
+		Se cont==2 então
+			return (TRUE)
+		Senão
+			return (FALSE)
+		fim-se
+
+		Fim
+
+Procedimento soma_primos
+	variáveis locais
+		aux: inteiro
+
+		Inicio
+
+		j=1
+		soma_primos=0
+		aux=0
+		enquanto aux <= N faça			
+
+			primos:lógica
+
+		Se primos(TRUE) então
+				soma_primos=soma_primos+j;
+				j=j+1;
+				aux=aux+1
+			Senão
+				j=j+1
+			fim-se
+		fim-enquanto
+		printf( "A soma de números primos foi de"," ",soma_primos-1," ","números reais" );
+
+		Fim
+
+
+	Inicio
+
+	printf( "Escreva quantos números primos seguidos você quer que some" );
+	leia (N);
+	soma_primos;
+
+	Fim

@@ -1,0 +1,27 @@
+procedimento insere_nome (prim : ponteiro; nome : string; dados : registro) // em dados estão os dados de alt e peso.
+var local
+	aux, novo : ponteiro;
+	saida : inteiro.
+
+Inicio
+	aux = prim;
+	saida = 0;
+	enquanto (aux^.prox <> nulo ou saida <> 0) faça
+		se aux^.nome < nome então
+			aux = aux^.prox;
+		senão
+			aloca (novo);
+			novo^.nome = nome;
+			novo^.dado = dados;
+			novo^.prox = aux;
+			novo^.ant = aux^.ant;
+			aux^.ant = novo;
+			saida = 1;
+		fim-se
+	fim-enquanto
+	se saida = 1 então
+		escreva "A inserção do nome foi feita com sucesso!";
+	senão
+		escreva "Incrivelmente houve um problema na inserção, a lista de nomes pode ser invalida");
+	fim-se
+Fim

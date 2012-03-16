@@ -1,0 +1,57 @@
+Algoritmo ordenação
+	variáveis globais
+		inteiro ve[3]. i,
+
+
+procedimento receber
+
+	Inicio
+		para i=0 até 2 faça
+			escreva "Entre com o",i+1," Número inteiro";
+			leia ve[i];
+		fim-para
+	fim
+
+procedimento ordenamento
+	variáveis locais
+		inteiro j, aux;
+
+	Inicio
+		para i=2 até 0 passo (-1) faça
+			para j=0 até i-1 faça
+				Se ve[j]>ve[j+1] então
+					aux=ve[j],
+					ve[j]=ve[j+1],
+					ve[j+1]=aux,
+				fim-se
+			fim-para
+		fim-para
+	fim
+
+procedimento escreva
+	Inicio
+		para i=0 até 2 faça
+			se i==0 então
+				escreva "A ordem dos números ficou assim:",ve[i],",";
+			Senão
+				se i==1 então
+					escreva ve[i],",";
+				senão
+					se i==2 então
+						escreva ve[i],".";
+					fim-se
+				fim-se
+			fim-se
+		fim-para
+	fim
+
+Inicio //principal
+
+	receber;
+	ordenamento;
+	escreva;
+
+fim
+
+
+Aluno: Alexandre Bossa Perotto - 2º Semestre

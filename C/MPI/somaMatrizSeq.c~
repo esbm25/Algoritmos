@@ -1,0 +1,83 @@
+/*
+*  <Soma de Matriz> is a   <Software para soma de matrizes >
+*  Copyright (C) 2010 Gustavo Liberatti <liberatti.gustvo@gmail.com>
+*		      Rodicrisller Rodrigues <rodi_67@gmail.com>
+		      Guilherme W. dos Santos Lopes <gwslopes@gmail.com> 
+*  This program is free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2, or (at your option)
+*  any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program; if not, write to the Free Software
+*  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+*
+*/
+#include <stdio.h>
+#include <time.h> 
+#define	MAX	4
+int *MatrizA, *MatrizB;
+void imprimeMatriz(int *matriz){
+	int l,c;
+	for(l=0;l<MAX-1;l++){
+		for(c=0;c<MAX-1;c++){
+			printf("|%d|",matriz[l*MAX + c]);
+		}	
+		printf("\n");
+	}
+}
+//Procedimento responsável por carregar a Matriz para a 
+void carregaMatriz(int *Matriz){
+	int i;
+	for(i=0;i<MAX*MAX;i++){
+		Matriz[i]=1;
+	}
+}
+
+void clear(){
+	//Diretiva de compilação para limpar a tela
+	#ifdef WIN32
+		system("cls");
+	#else
+		system("clear");
+	#endif
+}
+
+void imprimirMenu(){
+	clear();
+	printf("Desenvolvido pelos alunos: Rodicrisller Rodrigues," );
+	printf(	"Gustavo Liberatti, \n");
+	printf("-------------------------------------------------------------------\n\n");
+	
+}
+
+int main(int argc,char *argv[])  {
+	int i;
+	time_t ini = time(0); // tempo de inicio
+	imprimirMenu();
+	MatrizA = (int*) malloc(sizeof(int) * MAX * MAX);
+	MatrizB = (int*) malloc(sizeof(int) * MAX * MAX);
+	carregaMatriz(MatrizA);
+	carregaMatriz(MatrizB);
+	printf("Matriz de Entrada A ---------------------------------------------\n");
+	imprimeMatriz(MatrizA);
+	printf("Matriz de Entrada B ---------------------------------------------\n");
+	imprimeMatriz(MatrizB);
+	for(i=0;i<=((MAX*MAX ) -1);i++){
+		MatrizA[i]=MatrizA[i] + MatrizB[i];
+	}	
+
+	printf("Matriz Resultante ----------------------------------------------\n");
+		imprimeMatriz(MatrizA);
+		printf("-----------------------------------------------------------------\n");
+	printf("Duracao: %lf\n",time(0)-ini);
+
+	return 0;
+
+
+}

@@ -1,0 +1,23 @@
+função remove_repetidos ( &prim : ponteiro ) : Lógico
+var locais
+	aux, aux1, ant : ponteiro;
+
+Inicio
+	aux = prim;
+	aux1 = aux^.prox;
+	enquanto (aux^.prox <> nulo) faça
+		enquanto (aux1^.prox <> nulo) faça
+			se aux1^.dado == aux^.dado então
+				ant^.prox = aux^.prox;
+				desaloca (aux1);
+			fim-se
+			ant = aux1;
+			aux1 = aux1^.prox;
+		fim-enquanto
+		aux = aux^.prox;
+	fim-enquanto
+	se aux^.prox == Nulo então
+		retorna VERDADEIRO;
+	senão
+		retorna FALSO;
+Fim

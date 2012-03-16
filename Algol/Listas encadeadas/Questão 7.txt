@@ -1,0 +1,22 @@
+Questão 7.
+
+
+procedimento remove_elemento (& prim: ponteiro; elem: tipo);
+	variáveis locais
+		aux, ant: ponteiro;
+	início
+		aux = prim;
+		enquanto (aux^.dado <> elem e aux^.prox <> NULO) faça
+			ant = aux;
+			aux = aux^.prox;
+		fim-enquanto
+		se (aux^.dado == elem) então
+			se (aux == prim) então
+				prim = prim^.prox;
+				desaloca (aux);
+			senão
+				ant^.prox = aux^.prox;
+				desaloca (aux);
+			fim-se;
+		fim-se
+	fim.

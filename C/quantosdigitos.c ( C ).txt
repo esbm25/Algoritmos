@@ -1,0 +1,16 @@
+
+#include <stdio.h>
+
+int main()
+{
+        int n,i;
+        i=0;
+        printf("Informe um numero: ");
+        scanf("%d",&n);
+        do{
+                i=i+1;
+                n = (n /10);
+        }
+        while(n > 1);
+        printf("%d\n",i);
+}

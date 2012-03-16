@@ -1,0 +1,25 @@
+Algoritmo potenciacao
+
+	inteiro num, exp, i, aux;
+
+Inicio
+	
+	escreva "Digite o Numero da base da exponenciação";
+	leia num;
+	escreva "Entre com o valor do expoente";
+	leia exp;
+	aux=num;
+	Se exp==1 então
+		escreva "O Resultado é", num;
+	Senão
+		Se exp>1 então
+			para i=1 até (exp-1) faça
+				aux=aux*num;
+			fim-para
+		Senão
+			escreva "Opção Inválida";
+		fim-se
+	fim-se
+	escreva "O resultado é", aux;
+
+Fim

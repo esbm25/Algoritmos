@@ -1,0 +1,22 @@
+
+#include <stdio.h>
+#include <math.h>
+
+int main()
+{
+        float t,area;
+        int s1,s2,s3;
+
+        printf("Informe o primeiro numero: ");
+        scanf("%d",&s1);
+        printf("informe o segundo numero: ");
+        scanf("%d",&s2);
+        printf("Informe o ultimo numero: ");
+        scanf("%d",&s3);
+        t=(s1+s2+s3)/2;
+        area=sqrt(t*(t-s1)*(t-s2)*(t-s3));
+        printf("%f",area);
+
+}
+Utilizar o seguinte comando para compilar
+cc -lm areatriangulo.c -o areatriangulo.exe

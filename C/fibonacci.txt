@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int num,fibo,fibo1,soma,cont;
+ 
+int fibonacci(int num, int fibo, int fibo1, int soma, int cont)
+{
+        if (cont == num)
+        {
+                printf("\n");
+                return (1);
+        }
+        else
+        {
+                soma = fibo + fibo1;
+                fibo = fibo1;
+                fibo1 = soma;
+                cont++;
+                printf("%d \n",soma);
+                return(fibonacci(num, fibo, fibo1, soma, cont));
+        }
+}
+ 
+int main(int argc, char* argv[])
+{
+        fibo = 1;
+        fibo1 = 0;
+        soma = 0;
+        cont = 0;
+        if (argc < 2)
+                printf("Parametro errado, digite somente dentro do conjunto dos naturais.\n");
+        else
+        {
+                num = atoi(argv[1]);
+                fibonacci(num, fibo, fibo1, soma, cont);
+        }
+        return (0);
+}

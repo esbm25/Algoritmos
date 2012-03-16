@@ -1,0 +1,23 @@
+
+#include <stdio.h>
+
+int main()
+{
+     float a,b,c;
+
+     printf("Informe o primeiro valor: ");
+     scanf("%f",&a);
+     printf("Inform o segundo valor: ");
+     scanf("%f",&b);
+     printf("Informe o ultimo lado: ");
+     scanf("%f",&c);
+     if ((a<b+c)&&(b<a+c)&&(c<a+b))
+      if ((a==b)&&(b==c))
+        printf("Triangulo Equilatero\n");
+      else
+
+      if ((a==b)||(a==c)||(c==b))
+        printf("Triangulo isosceles\n");
+      else
+        printf("Triangulo Escaleno\n");
+}

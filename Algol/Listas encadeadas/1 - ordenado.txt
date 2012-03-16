@@ -1,0 +1,23 @@
+função ordenado (prim : ponteiro) : lógico
+var locais
+	aux, ant : ponteiro;
+	diferenciador : Inteiro;
+
+Inicio
+	aux = prim^.prox;
+	diferenciador = 0;
+	ant = prim;
+	enquanto (aux <> nulo e diferenciador = 0) faça
+		se ant^.dado <= aux^.dado então
+			ant = aux;
+			aux = aux^.prox;
+		senão
+			diferenciador = 1;
+		fim-se
+	fim-enquanto
+	se diferenciador = 0 então
+		Retorna VERDADEIRO;
+	senão
+		Retorna FALSO;
+	fim-se
+Fim

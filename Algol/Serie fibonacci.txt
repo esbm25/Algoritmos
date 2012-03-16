@@ -1,0 +1,25 @@
+Algoritmo Serie_fibonacci
+
+	inteiro num, primeiro, segundo, i, numero;
+
+
+Inicio
+	escreva "você gostaria de calcular a soma de qual n-éssimo termo da série?";
+	leia num;
+	Se num==1 então
+		escreva "O número é 1"
+	Senão
+		Se num==2 então
+			escreva "O número é 1"
+		Senão
+			primeiro=1;
+			segundo=1;
+			para i=1 até (num-2) faça
+				numero=primeiro + segundo;
+				primeiro=segundo;
+				segundo=numero;
+			fim-para
+		fim-se
+	fim-se
+	escreva "O", num,"termo da série é", numero;
+Fim

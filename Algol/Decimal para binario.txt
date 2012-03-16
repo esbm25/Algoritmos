@@ -1,0 +1,17 @@
+Algoritmo Decimal_para_binario
+
+Função deci_bina ( x: inteiro ) : inteiro
+
+variáveis locais
+	z, y: inteiro
+
+início
+	y = "";
+	repita
+		z = (x mod 2);
+		y = concatena (y,z);
+		x = (x div 2);	
+	até (x==1)
+	y = concatena (y,1);
+	retorna (y);
+fim.

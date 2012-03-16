@@ -1,0 +1,131 @@
+registro ficha_pessoal
+{
+	inteiro idade;
+	string nome;
+	string sexo;
+}ve[1000]
+
+procedimento menu
+inicio
+	escreva "1 - Adicionar Cadastro";
+	escreva "2 - Mostrar os cadastros por nome em ordem alfabética";
+	escreva "3 - Mostrar os cadastros por nome em ordem de idade, primeiramente os mais novos";
+	escreva "4 - Mostrar os cadastros por nome em ordem de idade, primeiramente os mais velhos";
+	escreva "Digite a Opção desejada: "
+fim
+
+procedimento verificar
+	var locais
+	int num, tam, i, j, aux;
+	string aux1, aux2;
+
+inicio
+	num=5;
+	enquanto num==5 faça
+	menu;
+	leia num;
+	Se num==1 então
+		i=0
+		repita
+			Se ve[i].idade<>0 então
+				i=i+1;
+			senão
+				escreva "Digite o Nome: ";
+				leia ve[i].nome;
+				escreva "Digite a idade: ";
+				leia ve[i].idade;
+				escreva "Digite M para masculino e F para feminino";
+				leia ve[i].sexo;
+			fim-se
+		enquanto ve[i].idade<>0 e i<1000
+		Se i==999 então
+			escreva "O cadastro está cheio";
+		senão
+			escreva "Algum procedimento ocorreu errado, desculpe, tente novamente";
+		fim-se
+	fim-se
+
+	se num==2 então
+		tam=1000;
+		para i=tam-1 ate 0 passo -1 faça
+			para j=0 ate i-1 faça
+				se ve[j].nome>ve[j+1].nome então
+					aux=ve[j].idade;
+					ve[j].idade=ve[j+1].idade;
+					ve[j+1].idade=aux;
+					aux1=ve[j].nome;
+					ve[j].nome=ve[j+1].nome;
+					ve[j+1].sexo=aux1;
+					aux2=ve[j].sexo;
+					ve[j].sexo=ve[j+1].sexo;
+					ve[j+1].sexo=aux2;
+				fim-se
+			fim-para
+		fim-para
+		i=0;
+		enquanto ve[i].idade<>0 faça
+			Escreva "Nome: ", ve[i].nome, " Idade: ", ve[i].idade, " sexo: ", ve[i].sexo;
+			i=i+1;
+		fim-enquanto
+	fim-se
+
+	Se num==3 então
+		tam=1000;
+		para i=tam-1 ate 0 passo -1 faça
+			para j=0 ate i-1 faça
+				se ve[j].idade>ve[j+1].idade então
+					aux=ve[j].idade;
+					ve[j].idade=ve[j+1].idade;
+					ve[j+1].idade=aux;
+					aux1=ve[j].nome;
+					ve[j].nome=ve[j+1].nome;
+					ve[j+1].sexo=aux1;
+					aux2=ve[j].sexo;
+					ve[j].sexo=ve[j+1].sexo;
+					ve[j+1].sexo=aux2;
+				fim-se
+			fim-para
+		fim-para
+		i=0;
+		enquanto ve[i].idade<>0 faça
+			Escreva "Nome: ", ve[i].nome, " Idade: ", ve[i].idade, " sexo: ", ve[i].sexo;
+			i=i+1;
+		fim-enquanto
+	fim-se
+
+	Se num==4 então
+		tam=1000;
+		para i=tam-1 ate 0 passo -1 faça
+			para j=0 ate i-1 faça
+				se ve[j].idade>ve[j+1].idade então
+					aux=ve[j].idade;
+					ve[j].idade=ve[j+1].idade;
+					ve[j+1].idade=aux
+					aux1=ve[j].nome;
+					ve[j].nome=ve[j+1].nome;
+					ve[j+1].sexo=aux1;
+					aux2=ve[j].sexo;
+					ve[j].sexo=ve[j+1].sexo;
+					ve[j+1].sexo=aux2;
+				fim-se
+			fim-para
+		fim-para
+		para i=tam-1 ate 0 passo -1 faça
+			Escreva "Nome: ", ve[i].nome, " Idade: ", ve[i].idade, " sexo: ", ve[i].sexo;
+		fim-para
+	fim-se
+	escreva "Digite 5 para voltar ao menu ou qualquer outro numero para sair";
+	leia num;
+	fim-enquanto
+fim
+
+Inicio //principal
+
+	para i=0 ate 999 faça
+		ve[i].nome=" ";
+		ve[i].idade=0;
+		ve[i].sexo=" ";
+	fim-para
+	verificar;
+
+Fim.
